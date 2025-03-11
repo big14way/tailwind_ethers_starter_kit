@@ -1,24 +1,25 @@
-const { ethers } = require('hardhat')
-const fs = require('fs')
+const { ethers } = require('hardhat');
+const fs = require('fs');
 
 async function main() {
-  const contract_name = ''
-  const Contract = await ethers.getContractFactory(contract_name)
-  const contract = await Contract.deploy()
+  const contractName = 'Gwill';
+  const baseURI = 'https://ipfs.io/ipfs/YOUR_CID_HERE/'; // Replace with your IPFS CID
+  const Contract = await ethers.getContractFactory('Gwill');
+  const contract = await Contract.deploy('Gwill NFT', 'GWL', baseURI);
 
-  await contract.deployed()
+  await contract.deployed();
 
-  const address = JSON.stringify({ address: contract.address }, null, 4)
+  const address = JSON.stringify({ address: contract.address }, null, 4);
   fs.writeFile('./src/abis/contractAddress.json', address, 'utf8', (err) => {
     if (err) {
-      console.error(err)
-      return
+      console.error(err);
+      return;
     }
-    console.log('Deployed contract address', contract.address)
-  })
+    console.log('Deployed contract address:', contract.address);
+  });
 }
 
 main().catch((error) => {
-  console.error(error)
-  process.exitCode = 1
-})
+  console.error(error);
+  process.exitCode = 1;
+});
